@@ -17,8 +17,14 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
+# emacsclient-with-return() {
+#   echo "what!: ${*}"
+#   # emacsclient -c ${*} && open -a "iTerm"
+#   emacsclient -c ${*}
+# }
+alias emacsclient-with-return='sh ~/src/pocket/dotfiles/scripts/emacsclient-with-return.sh'
+export EDITOR='sh ~/src/pocket/dotfiles/scripts/emacsclient-with-return.sh'
+export VISUAL='sh ~/src/pocket/dotfiles/scripts/emacsclient-with-return.sh'
 export PAGER='less'
 
 #
