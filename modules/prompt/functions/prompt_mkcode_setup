@@ -13,25 +13,25 @@
 #
 
 function prompt_mkcode_precmd {
-  # Check for untracked files or updated submodules since vcs_info does not.
-  if [[ -n $(git ls-files --other --exclude-standard 2> /dev/null) ]]; then
-    branch_format="(${_prompt_mkcode_colors[1]}%b%f 🍞 %c)"
-  else
-    branch_format="(${_prompt_mkcode_colors[1]}%b%f%u%c)"
+
+  # Git info
+  if (( $+functions[git-info] )); then
+    git-info
   fi
 
-  zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
-
-  vcs_info 'prompt'
-
   # Get Python information.
-  # if (( $+functions[python-info] )); then
-  #   python-info
-  # fi
+  if (( $+functions[python-info] )); then
+    python-info
+  fi
 
   # Get Ruby information.
   if (( $+functions[ruby-info] )); then
       ruby-info
+  fi
+
+  # Get node information.
+  if (( $+functions[node-info] )); then
+      node-info
   fi
 }
 
@@ -66,42 +66,43 @@ function prompt_mkcode_setup {
     )
   fi
 
-  # Formats:
-  #   %b - branchname
-  #   %u - unstagedstr (see below)
-  #   %c - stagedstr (see below)
-  #   %a - action (e.g. rebase-i)
-  #   %R - repository path
-  #   %S - path in the repository
-  local branch_format="(${_prompt_mkcode_colors[1]}%b%f%u%c)"
-  local action_format="(${_prompt_mkcode_colors[5]}%a%f)"
-  local unstaged_format=" 🍞"
-  local staged_format=" 🚀 "
-
-  # Set vcs_info parameters.
-  zstyle ':vcs_info:*' enable bzr git hg svn
-  zstyle ':vcs_info:*:prompt:*' check-for-changes true
-  zstyle ':vcs_info:*:prompt:*' unstagedstr "${unstaged_format}"
-  zstyle ':vcs_info:*:prompt:*' stagedstr "${staged_format}"
-  zstyle ':vcs_info:*:prompt:*' actionformats "${branch_format}${action_format}"
-  zstyle ':vcs_info:*:prompt:*' formats "${branch_format}"
-  zstyle ':vcs_info:*:prompt:*' nvcsformats " ✗ "
+  # Set git-info parameters.
+  zstyle ':prezto:module:git:info' verbose 'yes'
+  zstyle ':prezto:module:git:info:action' format '%F{7}:%f%%B%F{9}%s%f%%b '
+  zstyle ':prezto:module:git:info:added' format '%%B%F{2}✚%f%%b '
+  zstyle ':prezto:module:git:info:ahead' format '%%B%F{13}⬆%f%%b '
+  zstyle ':prezto:module:git:info:behind' format '%%B%F{13}⬇%f%%b '
+  zstyle ':prezto:module:git:info:branch' format '%%B${_prompt_mkcode_colors[1]}%b%f%%b'
+  zstyle ':prezto:module:git:info:commit' format '%%B%F{3}%.7c%f%%b'
+  zstyle ':prezto:module:git:info:deleted' format '%%B%F{1}✖%f%%b '
+  zstyle ':prezto:module:git:info:modified' format '%%B%F{4}✱%f%%b '
+  zstyle ':prezto:module:git:info:position' format '%%B%F{13}%p%f%%b'
+  zstyle ':prezto:module:git:info:renamed' format '%%B%F{5}➜%f%%b '
+  zstyle ':prezto:module:git:info:stashed' format '%%B%F{6}✭%f%%b '
+  zstyle ':prezto:module:git:info:unmerged' format '%%B%F{3}═%f%%b '
+  zstyle ':prezto:module:git:info:untracked' format '%%B%F{7}◼%f%%b '
+  zstyle ':prezto:module:git:info:keys' format \
+         'status' 'at $(coalesce "%b" "%p" "%c") %s%A%B%S%a%d%m%r%U%u'
+         # 'rprompt' '%F{blue}git[%f%c%F{blue}]%f'
 
   # Set editor-info parameters.
   zstyle ':prezto:module:editor:info:completing' format '${_prompt_mkcode_colors[5]}...%f'
-  zstyle ':prezto:module:editor:info:keymap:alternate' format '${_prompt_mkcode_colors[2]}--- COMMAND ---%f'
 
   # Set python-info parameters.
-  # zstyle ':prezto:module:python:info:virtualenv' format '(%v)'
+  zstyle ':prezto:module:python:info:virtualenv' format '%F{blue}py[%f%%B%F{13}%v%f%%b%F{blue}]%f'
+
   # Set ruby-info parameters.
-  zstyle ':prezto:module:ruby:info:version' format '%F{blue}[%v]%f'
+  zstyle ':prezto:module:ruby:info:version' format '%F{blue}rb[%f%%B%F{13}%v%f%%b%F{blue}]%f'
+
+  # Set node-info parameters.
+  zstyle ':prezto:module:node:info:version' format '%F{blue}js[%f%%B%F{13}%v%f%%b%F{blue}]%f'
 
   # Define prompts.
-  VIM_PROMPT="${_prompt_mkcode_colors[3]}[% NORMAL]% %f "
+  VIM_PROMPT="using ${_prompt_mkcode_colors[4]}[% NORMAL]% %f "
   PROMPT="
-${_prompt_mkcode_colors[3]}%n%f at ${_prompt_mkcode_colors[2]}%m%f in ${_prompt_mkcode_colors[5]}%~%f "'${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}'""'${vcs_info_msg_0_}'"
+${_prompt_mkcode_colors[3]}%n%f at ${_prompt_mkcode_colors[2]}%m%f "'${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}'"in ${_prompt_mkcode_colors[5]}%~%f "'${git_info:+${(e)git_info[status]}}'"
 "''"$ "
-  RPROMPT='${ruby_info[version]}'
+  RPROMPT='${python_info[version]} ${ruby_info[version]} $node_info[version]' # ${git_info[rprompt]}'
   SPROMPT='zsh: correct ${_prompt_mkcode_colors[3]}%R%f to ${_prompt_mkcode_colors[5]}%r%f [nyae]? '
 }
 
@@ -112,6 +113,6 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-export KEYTIMEOUT=2
+export KEYTIMEOUT=15
 
 prompt_mkcode_setup "$@"
