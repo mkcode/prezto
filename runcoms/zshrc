@@ -11,3 +11,31 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# non interactive fast directory switch
+alias jj='fasd_cd'
+
+
+
+# get our vim on
+bindkey -v
+
+# We still want a bunch of emacs binding here
+bindkey '^P' up-history
+bindkey '^N' down-history
+bindkey '^f' forward-char
+bindkey '^b' backward-char
+bindkey '^?' backward-delete-char
+bindkey '^h' backward-delete-char
+bindkey '^w' backward-kill-word
+
+# Some vimlike shortcuts for history nav
+bindkey '^k' up-history
+bindkey '^j' down-history
+
+# CTRL-r for backwards history of course
+bindkey '^r' history-incremental-search-backward
+
+# Pressing f and d at the same time escapes to normal mode
+bindkey 'fd' vi-cmd-mode
+
