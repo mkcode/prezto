@@ -15,7 +15,27 @@ fi
 # non interactive fast directory switch
 alias jj='fasd_cd'
 
+# cat with code highlighting
+alias cat='pygmentize -O style=monokai -f console256 -g'
 
+export LESS="-R"
+export LESSGLOBALTAGS="global"
+
+
+# Match variants
+local -a word_functions
+word_functions=(backward-kill-word backward-word
+                capitalize-word down-case-word
+                forward-word kill-word
+                transpose-words up-case-word)
+for f in $word_functions; do
+  autoload -Uz $f-match
+  zle -N $f $f-match
+done
+
+# Word boundaries are normal + $WORDCHARS with subword mode on
+autoload -U select-word-style
+select-word-style Normal
 
 # get our vim on
 bindkey -v
@@ -28,6 +48,8 @@ bindkey '^b' backward-char
 bindkey '^?' backward-delete-char
 bindkey '^h' backward-delete-char
 bindkey '^w' backward-kill-word
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
 
 # Some vimlike shortcuts for history nav
 bindkey '^k' up-history
@@ -46,4 +68,24 @@ zle -N change-surround surround
 bindkey -a 'cs' change-surround
 bindkey -a 'ds' delete-surround
 bindkey -a 'ys' add-surround
+bindkey -a 's' add-surround
+bindkey -a 'S' add-surround
 bindkey -M visual S add-surround
+
+# bindkey -a 'b' backward-word
+# bindkey -a 'w' forward-word
+bindkey -a 'v' visual-mode
+bindkey -a 'V' edit-command-line
+bindkey -a '^V' edit-command-line
+bindkey -a 'y' vi-yank
+bindkey -a 'Y' vi-yank-eol
+
+# wordstyle=standard-subword
+# zstyle ':zle:*' word-chars "$WORDCHARS"
+# zstyle ':zle:*' skip-whitespace-first false
+# zstyle ':zle:*' word-style $wordstyle
+
+# test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# Remove when merged: https://github.com/sorin-ionescu/prezto/pull/1001
+eval "$(nodenv init -)"
