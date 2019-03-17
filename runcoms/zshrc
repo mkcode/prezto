@@ -15,9 +15,6 @@ fi
 # non interactive fast directory switch
 alias jj='fasd_cd'
 
-# cat with code highlighting
-alias cat='pygmentize -O style=monokai -f console256 -g'
-
 export LESS="-R"
 export LESSGLOBALTAGS="global"
 
