@@ -100,7 +100,7 @@ function prompt_mkcode_setup {
   # Define prompts.
   VIM_PROMPT="using ${_prompt_mkcode_colors[4]}[% NORMAL]% %f "
   PROMPT="
-${_prompt_mkcode_colors[3]}%n%f at ${_prompt_mkcode_colors[2]}%m%f "'${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}'"in ${_prompt_mkcode_colors[5]}%~%f "'${git_info:+${(e)git_info[status]}}'"
+${_prompt_mkcode_colors[2]}%n%f "'${${KEYMAP/vicmd/$VIM_PROMPT}/(main|viins)/}'"in ${_prompt_mkcode_colors[5]}%~%f "'${git_info:+${(e)git_info[status]}}'"
 "''"$ "
   RPROMPT='${python_info[version]} ${ruby_info[version]} $node_info[version]' # ${git_info[rprompt]}'
   SPROMPT='zsh: correct ${_prompt_mkcode_colors[3]}%R%f to ${_prompt_mkcode_colors[5]}%r%f [nyae]? '
