@@ -51,7 +51,6 @@ typeset -gU cdpath fpath mailpath path
 path=(
   ~/.local/bin
   /usr/local/{bin,sbin}
-  /Library/TeX/Distributions/Programs/texbin
   $path
 )
 
