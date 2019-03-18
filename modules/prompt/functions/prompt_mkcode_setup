@@ -89,7 +89,7 @@ function prompt_mkcode_setup {
   zstyle ':prezto:module:editor:info:completing' format '${_prompt_mkcode_colors[5]}...%f'
 
   # Set python-info parameters.
-  zstyle ':prezto:module:python:info:virtualenv' format '%F{blue}py[%f%%B%F{13}%v%f%%b%F{blue}]%f'
+  zstyle ':prezto:module:python:info:version' format '%F{blue}py[%f%%B%F{13}%v%f%%b%F{blue}]%f'
 
   # Set ruby-info parameters.
   zstyle ':prezto:module:ruby:info:version' format '%F{blue}rb[%f%%B%F{13}%v%f%%b%F{blue}]%f'
