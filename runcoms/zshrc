@@ -53,7 +53,8 @@ bindkey '^k' up-history
 bindkey '^j' down-history
 
 # CTRL-r for backwards history of course
-bindkey '^r' history-incremental-search-backward
+bindkey '^r' history-substring-search-up
+bindkey '^s' history-substring-search-down
 
 # Pressing f and d at the same time escapes to normal mode
 bindkey 'fd' vi-cmd-mode
