@@ -22,9 +22,9 @@ fi
 #   # emacsclient -c ${*} && open -a "iTerm"
 #   emacsclient -c ${*}
 # }
-alias emacsclient-with-return='sh /Users/chris/src/pocket/dotfiles/scripts/emacsclient-with-return.sh'
-export EDITOR='sh /Users/chris/src/pocket/dotfiles/scripts/emacsclient-with-return.sh'
-export VISUAL='sh /Users/chris/src/pocket/dotfiles/scripts/emacsclient-with-return.sh'
+alias emacsclient-with-return='sh /Users/chris/src/pocket/dotfiles/script/emacsclient-with-return.sh'
+export EDITOR='sh /Users/chris/src/pocket/dotfiles/script/emacsclient-with-return.sh'
+export VISUAL='sh /Users/chris/src/pocket/dotfiles/script/emacsclient-with-return.sh'
 export PAGER='less'
 
 #
