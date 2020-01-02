@@ -14,6 +14,10 @@ fi
 
 # non interactive fast directory switch
 alias jj='fasd_cd'
+alias bge='e ~/.Brewfile'
+alias bgi='brew bundle --global'
+
+alias ff="fzf --preview 'bat --style=numbers --color=always {} | head -100' --height=50% --reverse"
 
 export LESS="-R"
 export LESSGLOBALTAGS="global"
@@ -84,3 +88,14 @@ bindkey -a 'Y' vi-yank-eol
 # zstyle ':zle:*' word-style $wordstyle
 
 # test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
+# Jenv setup
+export PATH="$HOME/.jenv/bin:$PATH"
+eval "$(jenv init -)"
+
+# Android studio setup
+export ANDROID_HOME="$HOME/Library/Android/sdk"
+export PATH="$ANDROID_HOME/emulator:$ANDROID_HOME/tools:$ANDROID_HOME/tools/bin:$ANDROID_HOME/platform-tools:$PATH"
+
+# The fuck
+eval $(thefuck --alias)
